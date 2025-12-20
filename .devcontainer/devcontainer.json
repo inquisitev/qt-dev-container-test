@@ -1,0 +1,14 @@
+{
+  "name": "my-project",
+  "build": {
+    "dockerfile": "dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}
+
