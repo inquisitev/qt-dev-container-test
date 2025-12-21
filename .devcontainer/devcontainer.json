@@ -3,10 +3,12 @@
   "build": {
     "dockerfile": "dockerfile"
   },
+  "tty":true,
+   "features": {
+   },
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-vscode.cpptools"
       ]
     }
   }
