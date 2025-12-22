@@ -9,5 +9,6 @@ services:
     command: bash
     volumes:
       - ${SSH_AUTH_SOCK}:/ssh-agent
+      - ..:/home/dev/workspace
     environment:
       SSH_AUTH_SOCK: /ssh-agent

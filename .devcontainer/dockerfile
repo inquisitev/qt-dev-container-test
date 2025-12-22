@@ -1,30 +1,77 @@
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV SHELL=/bin/bash
 
 RUN apt-get update && apt-get install -y \
     software-properties-common \
-    bash \
-    curl \
-    vim \
-    sudo \
-    cmake \
     ca-certificates \
     gnupg \
+    curl \
+    wget \
+    unzip \
+    sudo \
+    bash \
+    vim \
+    pkg-config \
+    build-essential \
+    cmake \
+    ninja-build \
+    python3 \
+    python3-pip \
+    python3-venv \
+    python3-setuptools \
+    python3-wheel \
+    libxkbcommon-dev \
+    libvulkan-dev \
+    zip \
+    unzip \
+    rpm \
+    rpm-common \
+    rpm2cpio \
+    cpio \
+    openssh-client \
  && rm -rf /var/lib/apt/lists/*
 
+# Need a newer version of git to be able to use nvim plugins
 RUN add-apt-repository ppa:git-core/ppa \
  && apt-get update \
  && apt-get install -y git \
  && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y \
+    qt6-base-dev \
+    qt6-base-dev-tools \
+    qt6-tools-dev \
+    qt6-tools-dev-tools \
+    qt6-l10n-tools \
+    qt6-declarative-dev \
+    qt6-declarative-dev-tools \
+    libgl1-mesa-dev \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/microsoft/vcpkg.git /opt/vcpkg \
+ && /opt/vcpkg/bootstrap-vcpkg.sh -disableMetrics
+
+ENV VCPKG_ROOT=/opt/vcpkg
+ENV PATH=/opt/vcpkg:$PATH
+
+RUN python3 -m pip install --no-cache-dir --upgrade pip \
+ && python3 -m pip install --no-cache-dir tox
+
+RUN mkdir -p /usr/src/rpm/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+
 RUN useradd -m -s /bin/bash dev \
  && echo "dev ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/dev \
- && chmod 0440 /etc/sudoers.d/dev
-
-RUN mkdir -p /home/dev/.ssh \
- && chown -R dev:dev /home/dev
+ && chmod 0440 /etc/sudoers.d/dev \
+ && chown -R dev:dev /usr/src/rpm \
+ && chown -R dev:dev /opt/vcpkg
 
 USER dev
 WORKDIR /home/dev
+
+ENV RPMBUILD=/usr/src/rpm
+ENV CMAKE_GENERATOR=Ninja
+ENV QT_SELECT=qt6
+ENV PATH=/home/dev/.local/bin:$PATH
 
