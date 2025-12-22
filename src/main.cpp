@@ -1,27 +1,22 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-int main(int argc, char* argv[])
-{
-   QGuiApplication app(argc, argv);
+int main(int argc, char *argv[]) {
+  QGuiApplication app(argc, argv);
 
-   QQmlApplicationEngine engine;
-   const QUrl url(u"qrc:/QtToxExample/Main.qml"_qs);
+  QQmlApplicationEngine engine;
+  const QUrl url("main.qml");
 
-   QObject::connect(
-         &engine,
-         &QQmlApplicationEngine::objectCreated,
-         &app,
-         [url](QObject* obj, const QUrl& objUrl) {
-            if(!obj && url == objUrl)
-            {
-               QCoreApplication::exit(1);
-            }
-         },
-         Qt::QueuedConnection
-         );
+  QObject::connect(
+      &engine, &QQmlApplicationEngine::objectCreated, &app,
+      [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl) {
+          QCoreApplication::exit(1);
+        }
+      },
+      Qt::QueuedConnection);
 
-   engine.load(url);
+  engine.load(url);
 
-   return app.exec();
+  return app.exec();
 }

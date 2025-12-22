@@ -8,8 +8,10 @@ project(qt_qml_tox_example
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_AUTOMOC ON)
+
 find_package(fmt CONFIG REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Quick Test)
 
 qt_add_executable(qt_qml_tox_example
     src/main.cpp
@@ -22,9 +24,20 @@ target_link_libraries(qt_qml_tox_example
     fmt::fmt
 )
 
+qt_add_executable(basicTest
+    tests/test_testing.h
+    tests/test_testing.cpp
+)
+
+target_link_libraries(basicTest
+    PRIVATE Qt6::Quick
+    Qt6::Test
+)
+
+
 enable_testing()
 add_test(
-    NAME build_only
-    COMMAND qt_qml_tox_example --help
+    NAME basicTest
+    COMMAND basicTest 
 )
 
