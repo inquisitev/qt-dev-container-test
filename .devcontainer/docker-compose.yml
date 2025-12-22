@@ -1,0 +1,13 @@
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: dockerfile
+    tty: true
+    stdin_open: true
+    command: bash
+    volumes:
+      - ${SSH_AUTH_SOCK}:/ssh-agent
+    environment:
+      SSH_AUTH_SOCK: /ssh-agent

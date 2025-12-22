@@ -1,16 +1,5 @@
 {
   "name": "my-project",
-  "build": {
-    "dockerfile": "dockerfile"
-  },
-  "tty":true,
-   "features": {
-   },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-      ]
-    }
-  }
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
 }
-

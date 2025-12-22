@@ -3,15 +3,28 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-   software-properties-common \
-   bash \ 
-   curl \
-   vim \
-   sudo \
-   cmake
+    software-properties-common \
+    bash \
+    curl \
+    vim \
+    sudo \
+    cmake \
+    ca-certificates \
+    gnupg \
+ && rm -rf /var/lib/apt/lists/*
 
-RUN add-apt-repository ppa:git-core/ppa
-RUN apt-get update
-RUN sudo apt-get install -y git
+RUN add-apt-repository ppa:git-core/ppa \
+ && apt-get update \
+ && apt-get install -y git \
+ && rm -rf /var/lib/apt/lists/*
 
+RUN useradd -m -s /bin/bash dev \
+ && echo "dev ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/dev \
+ && chmod 0440 /etc/sudoers.d/dev
+
+RUN mkdir -p /home/dev/.ssh \
+ && chown -R dev:dev /home/dev
+
+USER dev
+WORKDIR /home/dev
 
