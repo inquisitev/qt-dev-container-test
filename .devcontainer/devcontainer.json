@@ -2,4 +2,5 @@
   "name": "my-project",
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
+  "workspaceFolder": "/home/dev/workspace",
 }
