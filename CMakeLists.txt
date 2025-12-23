@@ -13,12 +13,13 @@ set(CMAKE_AUTOMOC ON)
 find_package(fmt CONFIG REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Quick Test)
 
-
 qt_add_executable(qt_qml_tox_example
     src/main.cpp
-        src/main.qml
+    src/main.qml
 )
-
+install(TARGETS qt_qml_tox_example
+  RUNTIME DESTINATION bin
+)
 
 target_link_libraries(qt_qml_tox_example
     PRIVATE Qt6::Quick
@@ -41,4 +42,15 @@ add_test(
     NAME basicTest
     COMMAND basicTest 
 )
+
+set(CPACK_OUTPUT_FILE_PREFIX "${CMAKE_BINARY_DIR}/dist")
+include(CPack)
+
+set(CPACK_PACKAGE_NAME "qt-qml-tox-example")
+set(CPACK_PACKAGE_VERSION "0.1.0")
+set(CPACK_PACKAGE_VENDOR "YourCompany")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Qt6 QML example application")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "qt-qml-tox-example")
+
+set(CPACK_GENERATOR "TGZ")
 
