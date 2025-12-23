@@ -13,6 +13,7 @@ set(CMAKE_AUTOMOC ON)
 find_package(fmt CONFIG REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Quick Test)
 
+
 qt_add_executable(qt_qml_tox_example
     src/main.cpp
         src/main.qml
