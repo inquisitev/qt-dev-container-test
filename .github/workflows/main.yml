@@ -19,15 +19,15 @@ jobs:
         run: |
           docker build \
             -f .devcontainer/Dockerfile \
-            -u "$(id -u):$(id -g)" \
-            -e HOME=/tmp \
-            -e TOX_WORK_DIR=/tmp/.tox \
             -t qt-dev:ci \
             .
 
       - name: Run tox inside container
         run: |
           docker run --rm \
+            -u "$(id -u):$(id -g)" \
+            -e HOME=/tmp \
+            -e TOX_WORK_DIR=/tmp/.tox \
             -v "${{ github.workspace }}:/workspace" \
             -w /workspace \
             qt-dev:ci \
