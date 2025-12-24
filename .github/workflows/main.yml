@@ -19,6 +19,9 @@ jobs:
         run: |
           docker build \
             -f .devcontainer/Dockerfile \
+            -u "$(id -u):$(id -g)" \
+            -e HOME=/tmp \
+            -e TOX_WORK_DIR=/tmp/.tox \
             -t qt-dev:ci \
             .
 
