@@ -25,7 +25,7 @@ jobs:
       - name: Run tox inside container
         run: |
           docker run --rm \
-            -u dev" \
+            -u "dev" \
             -e HOME=/tmp \
             -e TOX_WORK_DIR=/tmp/.tox \
             -v "${{ github.workspace }}:/workspace" \
