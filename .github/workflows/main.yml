@@ -31,4 +31,4 @@ jobs:
             -v "${{ github.workspace }}:/workspace" \
             -w /workspace \
             qt-dev:ci \
-            /bin/bash -c 'chown $(id -u) /opt/vcpkg && tox -e build,test'
+            /bin/bash -c 'sudo chown -R dev:dev /workspace && sudo -u dev tox'
