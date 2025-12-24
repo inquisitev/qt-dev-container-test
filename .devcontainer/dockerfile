@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y \
     rpm2cpio \
     cpio \
     openssh-client \
-    watchexec \
+    entr \
  && rm -rf /var/lib/apt/lists/*
 
 # Need a newer version of git to be able to use nvim plugins
