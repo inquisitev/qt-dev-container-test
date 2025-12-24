@@ -1,0 +1,31 @@
+name: Dockerized Tox
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tox:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image from .devcontainer
+        run: |
+          docker build \
+            -f .devcontainer/Dockerfile \
+            -t qt-dev:ci \
+            .
+
+      - name: Run tox inside container
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            qt-dev:ci \
+            tox -e build,test
