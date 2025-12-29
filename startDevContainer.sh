@@ -1,9 +1,9 @@
 #! /bin/bash
 
-devcontainer up --workspace-folder .
+devcontainer up --workspace-folder . --remove-existing-container
 
 devcontainer exec --workspace-folder . bash -lc \
-'DOTFILES=$HOME/.local/share/chezmoi; \
+   'DOTFILES=$HOME/.local/share/chezmoi; \
  mkdir -p $HOME/.ssh $HOME/.local/share; \
  ssh-keyscan github.com >> $HOME/.ssh/known_hosts; \
  chmod 700 $HOME/.ssh; chmod 600 $HOME/.ssh/known_hosts; \
@@ -12,4 +12,3 @@ devcontainer exec --workspace-folder . bash -lc \
  else \
    sudo /usr/bin/chezmoi update
  fi'
-

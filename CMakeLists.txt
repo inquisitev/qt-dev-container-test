@@ -12,11 +12,13 @@ set(CMAKE_AUTOMOC ON)
 
 find_package(fmt CONFIG REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Quick Test)
+find_package(GTest CONFIG REQUIRED)
 
 qt_add_executable(qt_qml_tox_example
     src/main.cpp
     src/main.qml
 )
+
 install(TARGETS qt_qml_tox_example
   RUNTIME DESTINATION bin
 )
@@ -26,22 +28,19 @@ target_link_libraries(qt_qml_tox_example
     fmt::fmt
 )
 
-qt_add_executable(basicTest
-    tests/test_testing.h
-    tests/test_testing.cpp
+add_executable(basicTest
+    tests/basic_test.cpp
 )
 
 target_link_libraries(basicTest
     PRIVATE Qt6::Quick
-    Qt6::Test
+    GTest::gtest
+    GTest::gtest_main
 )
-
 
 enable_testing()
-add_test(
-    NAME basicTest
-    COMMAND basicTest 
-)
+include(GoogleTest)
+gtest_discover_tests(basicTest)
 
 set(CPACK_OUTPUT_FILE_PREFIX "${CMAKE_BINARY_DIR}/dist")
 include(CPack)
