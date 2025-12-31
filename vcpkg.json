@@ -1,9 +1,5 @@
 {
   "name": "qt-qml-tox-example",
   "version": "0.1.0",
-  "dependencies": [
-    "fmt", 
-    "gtest"
-  ]
+  "dependencies": ["gtest"]
 }
-

@@ -10,7 +10,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_AUTOMOC ON)
 
-find_package(fmt CONFIG REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Quick Test)
 find_package(GTest CONFIG REQUIRED)
 
@@ -25,7 +24,6 @@ install(TARGETS qt_qml_tox_example
 
 target_link_libraries(qt_qml_tox_example
     PRIVATE Qt6::Quick
-    fmt::fmt
 )
 
 add_executable(basicTest
